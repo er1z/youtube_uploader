@@ -108,8 +108,8 @@ class App(wx.Panel):
 
         auth = OAuth(self)
         self.oauth = auth
-        # if not auth.ShowModal():
-        #     self.parent.Close()
+        if not auth.ShowModal():
+            self.parent.Close()
 
     def open(self, filepath):
         if sys.platform.startswith('darwin'):
@@ -179,7 +179,7 @@ class App(wx.Panel):
     def open_files(self):
         # Create open file dialog
         openFileDialog = wx.FileDialog(self, "Open", "", "",
-                                       "MTS (*.mts)|*.mts",
+                                       "Video files (*.mts;*.mp4;*.avi)|*.mts;*.mp4;*.avi",
                                        wx.FD_OPEN | wx.FD_FILE_MUST_EXIST | wx.FD_MULTIPLE)
 
         openFileDialog.ShowModal()
