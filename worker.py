@@ -2,10 +2,21 @@ import random
 import threading
 from time import sleep, time
 
+import httplib2
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload
 
-from youtube import RETRIABLE_STATUS_CODES, RETRIABLE_EXCEPTIONS
+import http.client as httplib
+
+# Always retry when these exceptions are raised.
+RETRIABLE_EXCEPTIONS = (httplib2.HttpLib2Error, IOError, httplib.NotConnected,
+                        httplib.IncompleteRead, httplib.ImproperConnectionState,
+                        httplib.CannotSendRequest, httplib.CannotSendHeader,
+                        httplib.ResponseNotReady, httplib.BadStatusLine)
+
+# Always retry when an apiclient.errors.HttpError with one of these status
+# codes is raised.
+RETRIABLE_STATUS_CODES = [500, 502, 503, 504]
 
 MAX_RETRIES = 3
 
